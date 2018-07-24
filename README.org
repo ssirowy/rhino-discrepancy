@@ -13,16 +13,26 @@
 * Setup
 1.  Install Ruby
 2.  Make sure you have jruby setup
-3.  Install Jruby Rhino `jruby -S gem install therubyrhino`
 
-* Running code in Ruby
-`jruby test.rb`
+(I'll assume both of these are setup for the time. Please refer to other resources for this. )
+
+3.  Install Jruby Rhino
+
+#+BEGIN_SRC bash
+jruby -S gem install therubyrhino`
+ #+END_SRC
+
+* Running this project
+
+#+BEGIN_SRC bash
+jruby test.rb
+ #+END_SRC
 
 * Running code in browsers
 - Open a console in Chrome and open dev tools
 
 #+BEGIN_SRC javascript
-    var char = '$' // or '€'
+    var char = '$' // or '€'.  Both should return with a value greater than -1 (not found)
     var _symbols = '$€'
     _symbols.indexOf(char)
- #+END_SRC
+#+END_SRC
