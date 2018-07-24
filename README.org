@@ -1,11 +1,17 @@
-* Rhino discrepancy
+* Value formatting discrepancy between browser and Rhino
   We run the SSF library on both the frontend (browser) and backend (Rhino context) for performing value formatting of results. Unfortunately it
   has been noticed that in some cases the values generated on the backend can differ from what is generated on the front end.
 
-  Most notably in some cases the backend will happily generate a result while in the frontend an "Unsupported format" will be generated.
+  Specifically in some cases the backend will happily generate a result while in the frontend an "Unsupported format" will be generated.
 
   After some searching/debugging, the discrepancy hinges on one clause where there are a couple of currency symbols being iterated over using
-  `indexOf`.
+  `indexOf`, something that basically looks like this:
+
+#+BEGIN_SRC javascript
+    '$€'.indexOf(char) > -1
+#+END_SRC
+
+  For a given character, '€',  this will return -1 in Rhino, but find it successfully in the browser, resulting in the value 1.
 
   This project removes all the SSF complexity and creates one simple method that highlights the error, and a simple Rhino runner to test a few
   characters.
