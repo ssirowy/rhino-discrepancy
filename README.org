@@ -1,0 +1,28 @@
+* Rhino discrepancy
+  We run the SSF library on both the frontend (browser) and backend (Rhino context) for performing value formatting of results. Unfortunately it
+  has been noticed that in some cases the values generated on the backend can differ from what is generated on the front end.
+
+  Most notably in some cases the backend will happily generate a result while in the frontend an "Unsupported format" will be generated.
+
+  After some searching/debugging, the discrepancy hinges on one clause where there are a couple of currency symbols being iterated over using
+  `indexOf`.
+
+  This project removes all the SSF complexity and creates one simple method that highlights the error, and a simple Rhino runner to test a few
+  characters.
+
+* Setup
+1.  Install Ruby
+2.  Make sure you have jruby setup
+3.  Install Jruby Rhino `jruby -S gem install therubyrhino`
+
+* Running code in Ruby
+`jruby test.rb`
+
+* Running code in browsers
+- Open a console in Chrome and open dev tools
+
+#+BEGIN_SRC javascript
+    var char = '$' // or '€'
+    var _symbols = '$€'
+    _symbols.indexOf(char)
+ #+END_SRC
